@@ -1,0 +1,170 @@
+/* -------------------------------------------
+   MAIN WRAPPER CARD
+-------------------------------------------- */
+.parent-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 880px;
+  background: #fff;
+  margin: 20px auto; /* THIS centers horizontally */
+  padding: 0;
+  border-radius: 12px;
+  border: 1px solid #dcdcdc;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+/* -------------------------------------------
+   TOP HEADER ROW
+-------------------------------------------- */
+.top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid #eee;
+
+  .title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .close-btn {
+    background: none !important;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-weight: 600;
+  }
+}
+
+/* -------------------------------------------
+   STEPPER FIX
+-------------------------------------------- */
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 28px 10px;
+}
+
+.stepper-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.step-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid #b5cbe8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #2f74da;
+  font-size: 20px;
+  font-weight: 600;
+  transition: 0.25s;
+}
+
+.step-active .step-icon {
+  background: #cce8e7;
+  border-color: #3178e1;
+  color: #fff;
+}
+
+/* connecting line */
+.stepper-line {
+  flex-grow: 1;
+  height: 2px;
+  background: #b5cbe8;
+  margin: 0 0px;
+}
+
+/* -------------------------------------------
+   BODY AREA
+-------------------------------------------- */
+.step-body {
+  padding: 30px;
+  min-height: 250px;
+  //background: #fafafa;
+}
+
+/* -------------------------------------------
+   BOTTOM BUTTON ROW
+-------------------------------------------- */
+.bottom-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 80%;
+  padding: 14px 18px;
+  border-top: 1px solid #eee;
+  background: #fff;
+
+  .btn {
+    padding: 0px 0px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  .back-btn {
+    background: #ddd;
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 8px 0px 0px;
+
+    svg {
+      width: 20px;
+      height: 20px;
+      padding: 5px;
+      background-color: #d1ccccd6;
+      border-bottom-left-radius: 6px;
+      border-top-left-radius: 6px;
+    }
+  }
+
+  .next-btn {
+    background: #007bff;
+    color: white;
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 2px 0px 8px;
+    svg {
+      width: 20px;
+      height: 20px;
+      padding: 5px;
+      fill: white;
+      background-color: #70b2f976;
+      border-bottom-right-radius: 6px;
+      border-top-right-radius: 6px;
+    }
+  }
+
+  .save-btn {
+    background: #2f74da;
+    color: white;
+    padding: 8px 12px;
+  }
+}

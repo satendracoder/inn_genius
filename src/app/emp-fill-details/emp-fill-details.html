@@ -1,0 +1,119 @@
+<!-- 🔵 MAIN FORM -->
+<div class="modal">
+    <div class="modal-header">
+        <i class="fa fa-user-circle header-icon"></i>
+        <h2>Add Employee Details</h2>
+    </div>
+
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-row">
+            <div class="form-column">
+                <label>Employee ID *</label>
+                <input type="text" formControlName="employeeId" />
+                <div class="error"
+                    *ngIf="employeeForm.get('employeeId')?.touched && employeeForm.get('employeeId')?.invalid">
+                    Employee ID is required.
+                </div>
+            </div>
+
+            <div class="form-column">
+                <label>First Name *</label>
+                <input type="text" formControlName="firstName" />
+                <div class="error"
+                    *ngIf="employeeForm.get('firstName')?.touched && employeeForm.get('firstName')?.invalid">
+                    First Name is required.
+                </div>
+            </div>
+
+            <div class="form-column">
+                <label>Last Name *</label>
+                <input type="text" formControlName="lastName" />
+                <div class="error"
+                    *ngIf="employeeForm.get('lastName')?.touched && employeeForm.get('lastName')?.invalid">
+                    Last Name is required.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-column">
+                <label>Email *</label>
+                <input type="email" formControlName="email" />
+                <div class="error" *ngIf="employeeForm.get('email')?.touched && employeeForm.get('email')?.invalid">
+                    <div *ngIf="employeeForm.get('email')?.errors?.['required']">Email is required.</div>
+                    <div *ngIf="employeeForm.get('email')?.errors?.['email']">Email must be valid.</div>
+                </div>
+            </div>
+
+            <div class="form-column">
+                <label>Date of Birth *</label>
+                <input type="date" formControlName="dateOfBirth" />
+                <div class="error"
+                    *ngIf="employeeForm.get('dateOfBirth')?.touched && employeeForm.get('dateOfBirth')?.invalid">
+                    Date of Birth is required.
+                </div>
+            </div>
+
+            <!-- 🔵 GENDER BOX SELECTION -->
+            <div class="form-column gender-row">
+                <label>Gender *</label>
+
+                <div class="gender-options">
+
+                    <label class="gender-option">
+                        <input type="radio" formControlName="gender" value="Male" />
+                        <span>Male</span>
+                    </label>
+
+                    <label class="gender-option">
+                        <input type="radio" formControlName="gender" value="Female" />
+                        <span>Female</span>
+                    </label>
+
+                </div>
+
+                <div class="error" *ngIf="employeeForm.get('gender')?.touched && employeeForm.get('gender')?.invalid">
+                    Gender is required.
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- Same property access section — unchanged -->
+        <div class="property-access-section">
+            <label class="section-label">Property Access (Select at least one) *</label>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Property Name</th>
+                        <th>Department</th>
+                        <th>Default</th>
+                    </tr>
+                </thead>
+
+                <tbody formArrayName="propertyAccess">
+                    <tr *ngFor="let propCtrl of propertyAccessArray.controls; let i = index" [formGroupName]="i">
+                        <td><input type="checkbox" formControlName="selected" /></td>
+                        <td>{{ propCtrl.get('name')?.value }}</td>
+                        <td>
+                            <select formControlName="department" name="department">
+                                <option value="">Select Department</option>
+                                <option *ngFor="let dept of properties[i].departmentList" [value]="dept">{{ dept }}
+                                </option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="radio" formControlName="isDefault" (change)="onSelectDefault(propCtrl)">
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </form>
+</div>
