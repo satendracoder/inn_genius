@@ -12,7 +12,7 @@ import { EmpFinal } from '../emp-final/emp-final';
   styleUrl: './employee-details.scss',
 })
 export class EmployeeDetails {
-  currentStep = 2;
+  currentStep = 0;
 
   @ViewChild(EmpFillDetails) childForm!: EmpFillDetails;
   @ViewChild(EmpAddSecound) childFormAdd!: EmpAddSecound;
