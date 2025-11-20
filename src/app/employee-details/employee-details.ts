@@ -12,17 +12,22 @@ import { EmpFinal } from '../emp-final/emp-final';
   styleUrl: './employee-details.scss',
 })
 export class EmployeeDetails {
-  currentStep = 0;
+  currentStep = 2;
 
   @ViewChild(EmpFillDetails) childForm!: EmpFillDetails;
+  @ViewChild(EmpAddSecound) childFormAdd!: EmpAddSecound;
 
   receivedFormData: any;
 
   receiveData(data: any) {
     this.receivedFormData = data;
     console.log('Parent received:', data);
-
     // Only after valid data → NEXT
+    this.currentStep++;
+  }
+
+  getSecondStepData(data: any) {
+    console.log('Second Step Data:', data);
     this.currentStep++;
   }
 
@@ -31,6 +36,10 @@ export class EmployeeDetails {
     debugger;
     if (this.currentStep === 0) {
       this.childForm.submitFormToParent();
+      return;
+    }
+    if (this.currentStep === 1) {
+      this.childFormAdd.onNext();
       return;
     }
     // Step 1,2,3 → Normal next

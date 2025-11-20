@@ -6,21 +6,31 @@
             <label>Role <span class="req">*</span></label>
 
             <div class="custom-dropdown" [class.open]="isOpen" (click)="isOpen = !isOpen">
+
                 <div class="dropdown-header">
-                    <span>Select Role</span>
+                    <span>{{ getSelectedText() }}</span>
                     <i class="icon-arrow"></i>
                 </div>
 
-                <div class="dropdown-body" *ngIf="isOpen">
-                    <label><input type="checkbox"> Select All</label>
-                    <label><input type="checkbox"> Administrator</label>
-                    <label><input type="checkbox"> Front Desk</label>
-                    <label><input type="checkbox"> Maintenance</label>
-                    <label><input type="checkbox"> Manager</label>
-                    <label><input type="checkbox"> Controller</label>
-                    <label><input type="checkbox"> Invoice Creator</label>
+                <div class="dropdown-body" *ngIf="isOpen" (click)="$event.stopPropagation()">
+
+                    <!-- Select All -->
+                    <label>
+                        <input type="checkbox" [checked]="isAllSelected()"
+                            (change)="onSelectAll($event.target.checked)">
+                        Select All
+                    </label>
+
+                    <!-- Dynamic Roles -->
+                    <label *ngFor="let role of roles">
+                        <input type="checkbox" [checked]="isSelected(role)"
+                            (change)="onRoleChange(role, $event.target.checked)">
+                        {{ role }}
+                    </label>
+
                 </div>
             </div>
+
         </div>
 
         <!-- Login Type -->

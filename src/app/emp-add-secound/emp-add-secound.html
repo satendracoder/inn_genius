@@ -1,14 +1,20 @@
 <div class="modal-container">
     <h2 class="title">Add Employee Details</h2>
 
-    <form [formGroup]="employeeForm" class="form-wrapper">
+    <form [formGroup]="employeeForm" (ngSubmit)="onNext()" class="form-wrapper">
 
         <div class="row">
+            <!-- USERNAME -->
             <div class="form-group">
                 <label>Web/App User Name *</label>
                 <input formControlName="userName" type="text" placeholder="Web/App User Name" />
+                <small class="error"
+                    *ngIf="employeeForm.get('userName')?.touched && employeeForm.get('userName')?.invalid">
+                    User Name is required
+                </small>
             </div>
 
+            <!-- PASSWORD -->
             <div class="form-group">
                 <label>Web/App Password *</label>
                 <div class="password-wrapper">
@@ -17,15 +23,25 @@
                     <i class="fa" [class.fa-eye]="!showPassword" [class.fa-eye-slash]="showPassword"
                         (click)="togglePassword()"></i>
                 </div>
+
+                <small class="error"
+                    *ngIf="employeeForm.get('password')?.touched && employeeForm.get('password')?.invalid">
+                    Password is required
+                </small>
             </div>
 
+            <!-- PASSCODE -->
             <div class="form-group">
                 <label>Time Clock Pass Code *</label>
                 <input formControlName="passCode" type="text" placeholder="Enter 4 Digit Number Only" />
+                <small class="error"
+                    *ngIf="employeeForm.get('passCode')?.touched && employeeForm.get('passCode')?.invalid">
+                    Pass code must be 4 digits (0-9)
+                </small>
             </div>
         </div>
 
-        <!-- Checkbox Row (Both in same row) -->
+        <!-- Checkbox Row -->
         <div class="row checkbox-row">
             <div class="form-group checkbox-box">
                 <label class="check-label">
@@ -42,7 +58,6 @@
             </div>
         </div>
 
-        <!-- Clock In/Out -->
         <div class="row">
             <div class="form-group">
                 <label>Before Clock In (Minutes)</label>
@@ -54,6 +69,5 @@
                 <input formControlName="beforeClockOut" type="number" />
             </div>
         </div>
-
     </form>
 </div>

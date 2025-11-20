@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -9,6 +9,8 @@ import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angula
   styleUrl: './emp-add-secound.scss',
 })
 export class EmpAddSecound {
+  @Output() secondStepData = new EventEmitter<any>(); // 👈 Parent ko data send karna
+
   showPassword = false;
   employeeForm!: FormGroup;
 
@@ -19,8 +21,8 @@ export class EmpAddSecound {
       passCode: ['', [Validators.required, Validators.pattern(/^[0-9]{4}$/)]],
       enableAppLogin: [true],
       excludedFromPayroll: [false],
-      beforeClockIn: [0],
-      beforeClockOut: [0],
+      beforeClockIn: [0, [Validators.required]],
+      beforeClockOut: [0, [Validators.required]],
     });
   }
 
@@ -28,15 +30,13 @@ export class EmpAddSecound {
     this.showPassword = !this.showPassword;
   }
 
-  next() {
+  onNext() {
     if (this.employeeForm.invalid) {
       this.employeeForm.markAllAsTouched();
       return;
     }
-    console.log(this.employeeForm.value);
-  }
 
-  back() {
-    console.log('Back clicked');
+    // 👇 Data Parent Component ko send karenge
+    this.secondStepData.emit(this.employeeForm.value);
   }
 }

@@ -12,7 +12,7 @@ export class EmpLoginType {
   employeeForm!: FormGroup;
   isOpen = false;
 
-  rolesList: string[] = [
+  roles = [
     'Administrator',
     'Front Desk',
     'Maintenance',
@@ -21,51 +21,60 @@ export class EmpLoginType {
     'Invoice Creator',
   ];
 
-  constructor(private fb: FormBuilder) {}
+  form!: FormGroup;
 
-  ngOnInit(): void {
-    this.employeeForm = this.fb.group({
-      roles: this.fb.array([], Validators.required),
-      loginType: ['', Validators.required],
-      city: ['', Validators.required],
-      state: ['', Validators.required],
+  constructor(private fb: FormBuilder) {
+    this.form = this.fb.group({
+      roles: this.fb.array([]),
     });
   }
 
-  // Getter for roles form array
-  get rolesFormArray() {
-    return this.employeeForm.get('roles') as FormArray;
+  get rolesArray() {
+    return this.form.get('roles') as FormArray;
   }
 
-  // Checkbox select/deselect role
-  toggleRole(role: string, event: any) {
-    if (event.target.checked) {
-      this.rolesFormArray.push(this.fb.control(role));
+  /** Checkbox Toggle */
+  onRoleChange(role: string, checked: boolean) {
+    if (checked) {
+      this.rolesArray.push(this.fb.control(role));
     } else {
-      const index = this.rolesFormArray.controls.findIndex((x) => x.value === role);
-      this.rolesFormArray.removeAt(index);
+      const index = this.rolesArray.controls.findIndex((x) => x.value === role);
+      this.rolesArray.removeAt(index);
     }
+
+    // 👇 Auto close dropdown after select
+    this.isOpen = true;
   }
 
-  // Select All
-  selectAll(event: any) {
-    this.rolesFormArray.clear();
+  /** Select All */
+  onSelectAll(checked: boolean) {
+    this.rolesArray.clear();
 
-    if (event.target.checked) {
-      this.rolesList.forEach((role) => {
-        this.rolesFormArray.push(this.fb.control(role));
-      });
+    if (checked) {
+      this.roles.forEach((r) => this.rolesArray.push(this.fb.control(r)));
     }
+
+    // 👇 Auto close dropdown
+    this.isOpen = true;
   }
 
-  // Submit Form
-  submitForm() {
-    if (this.employeeForm.invalid) {
-      this.employeeForm.markAllAsTouched();
-      return;
-    }
+  /** Check if one role is selected */
+  isSelected(role: string): boolean {
+    return this.rolesArray.value.includes(role);
+  }
 
-    console.log('Form Successfully Submitted!');
-    console.log(this.employeeForm.value);
+  /** Check all selected */
+  isAllSelected(): boolean {
+    return this.rolesArray.length === this.roles.length;
+  }
+
+  /** Header Text Logic */
+  getSelectedText() {
+    const selected = this.rolesArray.value;
+
+    if (selected.length === 0) return 'Select Role';
+    if (selected.length === 1) return selected[0]; // show single role name
+
+    return selected.join(', '); // multiple → comma separated list
   }
 }
