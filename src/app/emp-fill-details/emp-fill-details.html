@@ -83,6 +83,10 @@
 
         <!-- Same property access section — unchanged -->
         <div class="property-access-section">
+            <div class="error" style="text-align: right; position: absolute; width: 50%;"
+                *ngIf="employeeForm.errors?.['noPropertySelected'] && employeeForm.touched">
+                Please select at least one property.
+            </div>
             <label class="section-label">Property Access (Select at least one) *</label>
 
             <table>
@@ -112,8 +116,10 @@
 
                         </td>
                     </tr>
+
                 </tbody>
             </table>
+
         </div>
 
     </form>
