@@ -1,0 +1,62 @@
+<!-- Form -->
+<form [formGroup]="employeeForm" (ngSubmit)="onSave()">
+    <div class="form-section">
+        <!-- Compensation Type -->
+        <div class="form-group">
+            <label>Compensation Type</label>
+
+            <div class="select-wrapper">
+                <select formControlName="compensationType">
+                    <option value="">Select Compensation Type</option>
+                    <option *ngFor="let item of compensationTypes" [value]="item">
+                        {{ item }}
+                    </option>
+                </select>
+                <i class="fas fa-chevron-down dropdown-arrow" [class.open]="isCompTypeOpen"></i>
+            </div>
+
+            <div class="error" *ngIf="f['compensationType'].touched && f['compensationType'].invalid">
+                Compensation type is required
+            </div>
+        </div>
+
+        <!-- Amount -->
+        <div class="form-group">
+            <label>Compensation Amount</label>
+            <input type="number" formControlName="amount" />
+
+            <div class="error" *ngIf="f['amount'].touched && f['amount'].invalid">
+                Amount must be greater than 0
+            </div>
+        </div>
+
+        <!-- Frequency -->
+        <div class="form-group">
+            <label>Pay Frequency</label>
+
+            <div class="select-wrapper">
+                <select formControlName="payFrequency">
+                    <option value="">Select Pay Frequency</option>
+                    <option *ngFor="let item of frequencies" [value]="item">
+                        {{ item }}
+                    </option>
+                </select>
+
+                <i class="fas fa-chevron-down dropdown-arrow" [class.open]="isFrequencyOpen"></i>
+            </div>
+
+            <div class="error" *ngIf="f['payFrequency'].touched && f['payFrequency'].invalid">
+                Pay frequency is required
+            </div>
+        </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="actions">
+        <button type="button" class="back-btn">← Back</button>
+
+        <button type="submit" class="save-btn" [disabled]="employeeForm.invalid">
+            Save
+        </button>
+    </div>
+</form>

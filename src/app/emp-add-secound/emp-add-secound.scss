@@ -1,0 +1,93 @@
+.modal-container {
+  margin: 0 auto;
+  background: #ffffff;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.form-group {
+  flex: 1;
+  min-width: 240px;
+  display: flex;
+  flex-direction: column;
+
+  label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  input {
+    padding: 10px 12px;
+    border: 1px solid #d8d8d8;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: #0d6efd;
+      box-shadow: 0 0 3px rgba(0, 102, 255, 0.45);
+    }
+  }
+}
+
+/* Password Icon */
+.password-wrapper {
+  position: relative;
+
+  i {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    transform: translateY(-50%);
+    color: #666;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #0d6efd;
+    }
+  }
+}
+
+/* Checkbox row same line */
+.checkbox-row {
+  align-items: center;
+}
+
+.checkbox-box .check-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  input[type='checkbox'] {
+    width: 18px;
+    height: 18px;
+    accent-color: #0d6efd;
+    cursor: pointer;
+  }
+
+  span {
+    font-size: 14px;
+    font-weight: 600;
+  }
+}

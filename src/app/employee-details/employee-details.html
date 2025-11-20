@@ -79,9 +79,15 @@
             <ng-container *ngIf="currentStep === 0">
                 <app-emp-fill-details (formSubmit)="receiveData($event)"></app-emp-fill-details>
             </ng-container>
-            <ng-container *ngIf="currentStep === 1">Loading...2</ng-container>
-            <ng-container *ngIf="currentStep === 2">Loading...3</ng-container>
-            <ng-container *ngIf="currentStep === 3">Loading...4</ng-container>
+            <ng-container *ngIf="currentStep === 1">
+                <app-emp-add-secound></app-emp-add-secound>
+            </ng-container>
+            <ng-container *ngIf="currentStep === 2">
+                <app-emp-login-type></app-emp-login-type>
+            </ng-container>
+            <ng-container *ngIf="currentStep === 3">
+                <app-emp-final></app-emp-final>
+            </ng-container>
         </div>
 
         <!-- BOTTOM BUTTON AREA -->

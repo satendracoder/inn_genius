@@ -1,10 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { EmpFillDetails } from '../emp-fill-details/emp-fill-details';
+import { EmpAddSecound } from '../emp-add-secound/emp-add-secound';
+import { EmpLoginType } from '../emp-login-type/emp-login-type';
+import { EmpFinal } from '../emp-final/emp-final';
 
 @Component({
   selector: 'app-employee-details',
-  imports: [CommonModule, EmpFillDetails],
+  imports: [CommonModule, EmpFillDetails, EmpAddSecound, EmpLoginType, EmpFinal],
   templateUrl: './employee-details.html',
   styleUrl: './employee-details.scss',
 })
@@ -26,8 +29,8 @@ export class EmployeeDetails {
   stepTitles = ['Basic Details', 'Address Information', 'Salary & Payroll', 'Finish'];
   goNext() {
     if (this.currentStep > -1) {
-      this.childForm.submitFormToParent();
       this.currentStep++;
+      this.childForm.submitFormToParent();
     }
   }
 
