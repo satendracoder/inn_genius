@@ -19,19 +19,22 @@ export class EmployeeDetails {
   receivedFormData: any;
 
   receiveData(data: any) {
-    console.log('Data received in parent:', data);
     this.receivedFormData = data;
+    console.log('Parent received:', data);
 
-    // Ab valid hai → Next step chalao
+    // Only after valid data → NEXT
     this.currentStep++;
   }
 
   stepTitles = ['Basic Details', 'Address Information', 'Salary & Payroll', 'Finish'];
   goNext() {
-    if (this.currentStep > -1) {
-      this.currentStep++;
+    debugger;
+    if (this.currentStep === 0) {
       this.childForm.submitFormToParent();
+      return;
     }
+    // Step 1,2,3 → Normal next
+    this.currentStep++;
   }
 
   goBack() {

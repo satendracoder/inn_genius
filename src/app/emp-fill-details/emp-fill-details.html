@@ -97,7 +97,8 @@
 
                 <tbody formArrayName="propertyAccess">
                     <tr *ngFor="let propCtrl of propertyAccessArray.controls; let i = index" [formGroupName]="i">
-                        <td><input type="checkbox" formControlName="selected" /></td>
+                        <td><input type="checkbox" formControlName="selected" (change)="onChangeSelected(propCtrl)" />
+                        </td>
                         <td>{{ propCtrl.get('name')?.value }}</td>
                         <td>
                             <select formControlName="department" name="department">
@@ -107,7 +108,7 @@
                             </select>
                         </td>
                         <td>
-                            <input type="radio" formControlName="isDefault" (change)="onSelectDefault(propCtrl)">
+                            <input type="radio" formControlName="isDefault" [value]="true">
 
                         </td>
                     </tr>

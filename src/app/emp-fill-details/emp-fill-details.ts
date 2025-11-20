@@ -82,52 +82,60 @@ export class EmpFillDetails {
     return this.employeeForm.get('propertyAccess') as FormArray;
   }
 
+  // ⭐ At least one property must be selected
   atLeastOnePropertySelected(): ValidatorFn {
     return (form: AbstractControl) => {
       const arr = form.get('propertyAccess') as FormArray;
-      const anySelected = arr.controls.some((control) => control.get('selected')?.value);
-      return anySelected ? null : { noPropertySelected: true };
+      const selected = arr.controls.some((c) => c.get('selected')?.value === true);
+      return selected ? null : { noPropertySelected: true };
     };
   }
 
+  // ⭐ Exactly one default among selected
   exactlyOneDefaultSelected(): ValidatorFn {
     return (form: AbstractControl) => {
       const arr = form.get('propertyAccess') as FormArray;
 
-      const selectedProps = arr.controls.filter((control) => control.get('selected')?.value);
+      const selectedProps = arr.controls.filter((c) => c.get('selected')?.value);
 
-      const defaultChecked = selectedProps.filter(
-        (control) => control.get('isDefault')?.value
-      ).length;
+      if (selectedProps.length === 0) return null;
 
-      return defaultChecked === 1 ? null : { defaultNotExactlyOne: true };
+      const defaultCount = selectedProps.filter((c) => c.get('isDefault')?.value === true).length;
+
+      return defaultCount === 1 ? null : { defaultNotExactlyOne: true };
     };
   }
 
   // ⭐ CHANGE WHEN SELECTED = TRUE → CLEAR DEFAULT & DEPARTMENT
-  onChangeSelected(propertyGroup: FormGroup) {
-    const selected = propertyGroup.get('selected')?.value;
+  onChangeSelected(propertyGroup: AbstractControl) {
+    const group = propertyGroup as FormGroup;
+    const selected = group.get('selected')?.value;
 
     if (!selected) {
-      propertyGroup.get('department')?.reset('');
-      propertyGroup.get('isDefault')?.setValue(false);
+      group.get('department')?.reset('');
+      group.get('isDefault')?.setValue(false);
 
-      propertyGroup.get('department')?.disable();
-      propertyGroup.get('isDefault')?.disable();
+      group.get('department')?.disable();
+      group.get('isDefault')?.disable();
     } else {
-      propertyGroup.get('department')?.enable();
-      propertyGroup.get('isDefault')?.enable();
+      group.get('department')?.enable();
+      group.get('isDefault')?.enable();
     }
+
+    group.updateValueAndValidity();
   }
 
   // ⭐ ONLY ONE DEFAULT AMONG SELECTED
-  onSelectDefault(selected: AbstractControl) {
-    const selectedGroup = selected as FormGroup;
+  onSelectDefault(propertyGroup: AbstractControl) {
+    const selectedGroup = propertyGroup as FormGroup;
 
     this.propertyAccessArray.controls.forEach((ctrl) => {
       const group = ctrl as FormGroup;
 
-      if (group !== selectedGroup) {
+      // Selected group => this one becomes true
+      if (group === selectedGroup) {
+        group.get('isDefault')?.setValue(true);
+      } else {
         group.get('isDefault')?.setValue(false);
       }
     });
@@ -143,10 +151,19 @@ export class EmpFillDetails {
 
   submitFormToParent() {
     debugger;
-    if (this.employeeForm.invalid) {
+    this.employeeForm.updateValueAndValidity();
+    console.log('FORM ERRORS:', this.employeeForm.errors);
+    console.log(
+      'PROPERTY ERRORS:',
+      this.propertyAccessArray.controls.map((c) => c.errors)
+    );
+    console.log('VALUES:', this.employeeForm.value);
+
+    if (this.employeeForm.invalid || this.employeeForm.errors?.['noPropertySelected']) {
       this.employeeForm.markAllAsTouched();
       return;
     }
+
     this.onSubmit();
   }
 
